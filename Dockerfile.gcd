@@ -1,0 +1,21 @@
+FROM golang AS build-env
+
+WORKDIR /go/src/github.com/rh01/mini-deploy-app/gcd
+COPY gcd .
+COPY pb ../pb
+COPY vendor ../vendor
+
+
+
+ENV http_proxy http://192.168.1.9:12333
+ENV https_proxy http://192.168.1.9:12333
+
+RUN go get -u -v github.com/kardianos/govendor
+RUN govendor sync
+RUN GOOS=linux GOARCH=arm GOARM=7 go build -v -o /go/src/github.com/rh01/mini-deploy-app/gcd-server
+
+
+FROM armhf/alpine:latest
+COPY --from=build-env /go/src/github.com/rh01/mini-deploy-app/gcd-server /usr/local/bin/gcd
+EXPOSE 3000
+CMD [ "gcd" ]

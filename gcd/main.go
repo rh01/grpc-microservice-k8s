@@ -1,11 +1,12 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net"
 
-	"github.com/rh01/mini-deploy-app/pb"
+	context "golang.org/x/net/context"
+
+	pb "github.com/rh01/mini-deploy-app/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -14,7 +15,7 @@ type server struct {
 }
 
 func main() {
-	lis, err := net.Listen("tcp", 3000)
+	lis, err := net.Listen("tcp", ":3000")
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}

@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rh01/mini-deploy-app/pb"
+	pb "github.com/rh01/mini-deploy-app/pb"
 	"google.golang.org/grpc"
 )
 
